@@ -2,7 +2,7 @@ import React from 'react';
 import { Image, Text, View, Button } from 'react-native';
 import { styles } from './WelcomePage.styles';
 
-export const WelcomePage = () => {
+export const WelcomePage = ({ isAppStarted }) => {
     return (
         <View style={styles.container}>
             <Image style={styles.image} source={require('../.././assets/shopping.jpg')}/>
@@ -13,7 +13,7 @@ export const WelcomePage = () => {
                 </Text>
             </Text>
             <Text style={styles.subtitle}>Shopping List App</Text>
-            <Button color='#689FEF' title='Start'/>
+            <Button color='#689FEF' title='Start' onPress={isAppStarted}/>
         </View>
     )
 }
