@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableHighlight, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableHighlight, Button, StyleSheet, ScrollView } from 'react-native';
 
 export const ShoppingList = () => {
     const [product, setProduct] = useState('');
@@ -23,13 +23,15 @@ export const ShoppingList = () => {
             <TouchableHighlight style={styles.button}>
                 <Button color='#689FEF' title={'Add'} onPress={handleProductSubmit} />
             </TouchableHighlight>
-            {listOfProducts.map((product, index) => {
-                return (
-                    <View style={styles.product} key={index}>
-                        <Text>{product}</Text>
-                    </View>
-                )
-            })}
+            <ScrollView style={styles.items}>
+                {listOfProducts.map((product, index) => {
+                    return (
+                        <View style={styles.product} key={index}>
+                            <Text>{product}</Text>
+                        </View>
+                    )
+                })}
+            </ScrollView>
         </View>
     )
 }
@@ -39,7 +41,7 @@ export const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
         alignItems: 'center',
-        justifyContent: 'center',
+        marginTop: 50
       },
 
       header: {
@@ -69,6 +71,10 @@ export const styles = StyleSheet.create({
         marginBottom: 10,
         padding: 10,
         width: 260,
+      },
+
+      items: {
+          flex: 1
       }
 })
     
