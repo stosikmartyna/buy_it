@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableHighlight, Button, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableHighlight, Button, StyleSheet, FlatList } from 'react-native';
 
 export const ShoppingList = () => {
     const [product, setProduct] = useState('');
@@ -10,8 +10,12 @@ export const ShoppingList = () => {
     }
 
     const handleProductSubmit = () => {
-        setListOfProducts([...listOfProducts, product]);
+        setListOfProducts(state => [
+            ...state, 
+            { id: new Date().toISOString(), value: product }
+        ]);
     }
+
     return (
         <View style={styles.container}>
             <Text style={styles.header}>Shopping List</Text>
@@ -19,19 +23,21 @@ export const ShoppingList = () => {
                 placeholder="ex. Milk" 
                 style={styles.input}
                 onChangeText={handleInputChange}
+                value={product}
             />
             <TouchableHighlight style={styles.button}>
                 <Button color='#689FEF' title={'Add'} onPress={handleProductSubmit} />
             </TouchableHighlight>
-            <ScrollView style={styles.items}>
-                {listOfProducts.map((product, index) => {
-                    return (
-                        <View style={styles.product} key={index}>
-                            <Text>{product}</Text>
-                        </View>
-                    )
-                })}
-            </ScrollView>
+            <FlatList 
+                style={styles.items}
+                keyExtractor={item => item.id}
+                data={listOfProducts}
+                renderItem={itemData => (
+                    <View style={styles.product}>
+                        <Text>{itemData.item.value}</Text>
+                    </View>
+                )}
+            />
         </View>
     )
 }
