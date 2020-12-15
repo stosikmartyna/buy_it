@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableHighlight, Button, StyleSheet, FlatList } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, FlatList, TouchableHighlight } from 'react-native';
 
 export const ShoppingList = () => {
     const [product, setProduct] = useState('');
@@ -16,6 +16,12 @@ export const ShoppingList = () => {
         ]);
     }
 
+    const removeProduct = (productToRemove) => {
+        setListOfProducts(state => {
+          return state.filter(product => product.id !== productToRemove)
+        });
+      }
+
     return (
         <View style={styles.container}>
             <Text style={styles.header}>Shopping List</Text>
@@ -26,15 +32,17 @@ export const ShoppingList = () => {
                 value={product}
             />
             <TouchableHighlight style={styles.button}>
-                <Button color='#689FEF' title={'Add'} onPress={handleProductSubmit} />
+                <Button color={'#689FEF'} title={'Add'} onPress={handleProductSubmit} />
             </TouchableHighlight>
             <FlatList 
-                style={styles.items}
                 keyExtractor={item => item.id}
                 data={listOfProducts}
                 renderItem={itemData => (
-                    <View style={styles.product}>
+                    <View style={styles.product} id={itemData.item.id}>
                         <Text>{itemData.item.value}</Text>
+                        <TouchableHighlight style={styles.removeButton}>
+                            <Button color={'#689FEF'} title={'X'} onPress={removeProduct.bind(this, itemData.item.id)}/>
+                        </TouchableHighlight>
                     </View>
                 )}
             />
@@ -70,17 +78,21 @@ export const styles = StyleSheet.create({
       },
 
       product: {
+        alignItems: 'center',
         backgroundColor: '#d4e4fc',
         borderColor: '#689FEF',
         borderRadius: 4,
         borderWidth: 1,
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         marginBottom: 10,
         padding: 10,
         width: 260,
       },
 
-      items: {
-          flex: 1
+      removeButton: {
+        width: 40
       }
 })
     
