@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, FlatList, TouchableHighlight } from 'react-native';
+import { View, Text, TextInput, Button, FlatList, TouchableHighlight } from 'react-native';
+import { styles } from './ShoppingList.styles';
 
 export const ShoppingList = () => {
     const [product, setProduct] = useState('');
@@ -31,16 +32,20 @@ export const ShoppingList = () => {
     return (
         <View style={styles.container}>
             <Text style={styles.header}>Shopping List</Text>
-            <TextInput 
-                placeholder={'ex. Milk'}
-                style={styles.input}
-                onChangeText={handleInputChange}
-                value={product}
-            />
-            <TouchableHighlight style={styles.button}>
-                <Button color={'#689FEF'} title={'Add'} onPress={handleSubmit} />
-            </TouchableHighlight>
+            <View style={styles.form}>
+                <TextInput 
+                    placeholder={'ex. Milk'}
+                    style={styles.input}
+                    onChangeText={handleInputChange}
+                    value={product}
+                />
+                <TouchableHighlight>
+                    <Text style={styles.button} onPress={handleSubmit}>Add</Text>
+                </TouchableHighlight>
+            </View>
+            
             <FlatList 
+                style={styles.list}
                 keyExtractor={item => item.id}
                 data={listOfProducts}
                 renderItem={itemData => (
@@ -54,51 +59,4 @@ export const ShoppingList = () => {
             />
         </View>
     )
-}
-
-export const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: 'white',
-        alignItems: 'center',
-        marginTop: 50
-      },
-
-      header: {
-        color: '#689FEF',
-        fontSize: 30,
-        marginBottom: 10,
-      },
-
-      input: {
-        borderColor: '#474948', 
-        borderRadius: 4,
-        borderWidth: 1, 
-        marginBottom: 10,
-        padding: 10,
-        width: 260, 
-      },
-
-      button: {
-          marginBottom: 20
-      },
-
-      product: {
-        alignItems: 'center',
-        backgroundColor: '#d4e4fc',
-        borderColor: '#689FEF',
-        borderRadius: 4,
-        borderWidth: 1,
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginBottom: 10,
-        padding: 10,
-        width: 260,
-      },
-
-      removeButton: {
-        width: 40
-      }
-})
-    
+}    
