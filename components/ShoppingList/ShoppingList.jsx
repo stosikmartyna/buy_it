@@ -9,11 +9,15 @@ export const ShoppingList = () => {
         setProduct(value)
     }
 
-    const handleProductSubmit = () => {
-        setListOfProducts(state => [
-            ...state, 
-            { id: new Date().toISOString(), value: product }
-        ]);
+    const handleSubmit = () => {
+        const isValid = product.trim() !== '';
+        const newProduct = { id: new Date().toISOString(), value: product }
+
+        const addProduct = () => {
+            setListOfProducts(state => [...state, newProduct])
+        };
+
+        isValid && addProduct();
     }
 
     const removeProduct = (productToRemove) => {
@@ -26,13 +30,13 @@ export const ShoppingList = () => {
         <View style={styles.container}>
             <Text style={styles.header}>Shopping List</Text>
             <TextInput 
-                placeholder="ex. Milk" 
+                placeholder={'ex. Milk'}
                 style={styles.input}
                 onChangeText={handleInputChange}
                 value={product}
             />
             <TouchableHighlight style={styles.button}>
-                <Button color={'#689FEF'} title={'Add'} onPress={handleProductSubmit} />
+                <Button color={'#689FEF'} title={'Add'} onPress={handleSubmit} />
             </TouchableHighlight>
             <FlatList 
                 keyExtractor={item => item.id}
