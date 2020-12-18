@@ -11,11 +11,13 @@ export const ShoppingList = () => {
 
     const handleSubmit = () => {
         const isValid = product.trim() !== '';
-        const newProduct = { id: new Date().toISOString(), value: product }
+        const isoDateNow = new Date().toISOString();
+        const newProduct = { id: isoDateNow, value: product };
 
         const addProduct = () => {
-            setListOfProducts(state => [...state, newProduct])
-        };
+            setListOfProducts(state => [...state, newProduct]);
+            setProduct('');
+        };       
 
         isValid && addProduct();
     }
@@ -24,7 +26,7 @@ export const ShoppingList = () => {
         setListOfProducts(state => {
           return state.filter(product => product.id !== productToRemove)
         });
-      }
+    }
 
     return (
         <View style={styles.container}>

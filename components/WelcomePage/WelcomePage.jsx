@@ -5,7 +5,7 @@ import { styles } from './WelcomePage.styles';
 export const WelcomePage = ({ isAppStarted }) => {
     return (
         <View style={styles.container}>
-            <Image style={styles.image} source={require('../.././assets/shopping.jpg')}/>
+            <Image style={styles.image} source={require('../.././assets/shopping.jpg')} />
             <Text style={styles.logoFirstWord}>
                 Buy
                 <Text style={styles.logoSecondWord}>
@@ -13,7 +13,7 @@ export const WelcomePage = ({ isAppStarted }) => {
                 </Text>
             </Text>
             <Text style={styles.subtitle}>Shopping List App</Text>
-            <Button color={'#689FEF'} title={'Start'} onPress={isAppStarted}/>
+            <Button color={'#689FEF'} title={'Start'} onPress={isAppStarted} />
         </View>
     )
 }
