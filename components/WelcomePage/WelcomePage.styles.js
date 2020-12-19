@@ -2,21 +2,18 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
     container: {
-      flex: 1,
       backgroundColor: 'white',
       alignItems: 'center',
-      justifyContent: 'center',
     },
   
     image: {
-      height: 260,
+      height: 250,
       width: 346,
     },
   
     logoFirstWord: {
       color: '#689FEF',
-      fontSize: 60,
-      marginBottom: 10
+      fontSize: 40,
     },
   
     logoSecondWord: {
@@ -27,4 +24,13 @@ export const styles = StyleSheet.create({
       color: '#474948',
       marginBottom: 10,
     },
-  });
+
+    input: {
+      borderColor: 'lightgrey', 
+      borderRadius: 4,
+      borderWidth: 1,
+      marginBottom: 10,
+      padding: 10,
+      width: 250,
+    },
+});

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import firebase from 'firebase';
 import { View, Text, TextInput, Button, FlatList, TouchableHighlight } from 'react-native';
 import { styles } from './ShoppingList.styles';
 
@@ -29,6 +30,10 @@ export const ShoppingList = () => {
         });
     }
 
+    const signOut = () => {
+        firebase.auth().signOut();
+    }
+
     return (
         <View style={styles.container}>
             <Text style={styles.header}>Shopping List</Text>
@@ -57,6 +62,9 @@ export const ShoppingList = () => {
                     </View>
                 )}
             />
+            <TouchableHighlight style={styles.signOutButton}>
+                <Button color={'#689FEF'} title={'Sign out'} onPress={signOut} style={styles.button} />
+            </TouchableHighlight>
         </View>
     )
 }    

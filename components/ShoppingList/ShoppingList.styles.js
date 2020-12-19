@@ -57,5 +57,9 @@ export const styles = StyleSheet.create({
 
     removeButton: {
         width: 40
+    },
+
+    signOutButton: {
+        marginBottom: 30,
     }
 })
