@@ -1,12 +1,25 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import firebase from 'firebase';
 import { View, Text, TextInput, Button, FlatList, TouchableHighlight } from 'react-native';
 import { styles } from './ShoppingList.styles';
+import { AuthContext } from '../../context/AuthProvider';
 
 export const ShoppingList = () => {
     const [product, setProduct] = useState('');
     const [listOfProducts, setListOfProducts] = useState([]);
 
+    const {user} = useContext(AuthContext);
+
+    const postProduct = async (productName) => {
+        try {
+            await firebase.database().ref('products').push(productName);
+            alert('Sent correctly');
+            return true;
+        } catch (err) {
+            alert(err);
+        }
+    };
+    
     const handleInputChange = (value) => {
         setProduct(value)
     }
@@ -21,7 +34,7 @@ export const ShoppingList = () => {
             setProduct('');
         };       
 
-        isValid && addProduct();
+        isValid && postProduct(product) && addProduct(); 
     }
 
     const removeProduct = (productToRemove) => {

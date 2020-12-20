@@ -5,12 +5,13 @@ import { AppView } from './components/AppView/AppView';
 
 if (!firebase.apps.length) {
   firebase.initializeApp({
-    apiKey: "AIzaSyAF8Dtma3bex7Y_mde-bvqCvb8oj4Z-sFw",
-    authDomain: "buyit-e91cc.firebaseapp.com",
-    projectId: "buyit-e91cc",
-    storageBucket: "buyit-e91cc.appspot.com",
-    messagingSenderId: "347966380356",
-    appId: "1:347966380356:web:d4a1393ea1eebc7231df11"
+    apiKey: "AIzaSyCDegAf36ndoUzdpUuPIi0nMbK3VbT3fBU",
+    authDomain: "buy-it-faaec.firebaseapp.com",
+    databaseURL: "https://buy-it-faaec-default-rtdb.firebaseio.com",
+    projectId: "buy-it-faaec",
+    storageBucket: "buy-it-faaec.appspot.com",
+    messagingSenderId: "971127732697",
+    appId: "1:971127732697:web:2032d1720e2aa5666501c8"
   });
 } else {
   firebase.app(); 
