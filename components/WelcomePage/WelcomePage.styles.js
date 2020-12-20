@@ -24,13 +24,4 @@ export const styles = StyleSheet.create({
       color: '#474948',
       marginBottom: 10,
     },
-
-    input: {
-      borderColor: 'lightgrey', 
-      borderRadius: 4,
-      borderWidth: 1,
-      marginBottom: 10,
-      padding: 10,
-      width: 250,
-    },
 });
