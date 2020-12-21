@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import firebase from 'firebase';
 import { View, Text, TextInput, Button, FlatList, TouchableHighlight } from 'react-native';
 import { styles } from './ShoppingList.styles';
@@ -11,8 +11,9 @@ export const ShoppingList = () => {
     const {user} = useContext(AuthContext);
 
     const postProduct = async (productName) => {
+        const postUrl = `user/${user.uid}/products`
         try {
-            await firebase.database().ref('products').push(productName);
+            await firebase.database().ref(postUrl).push(productName);
             alert('Sent correctly');
             return true;
         } catch (err) {
