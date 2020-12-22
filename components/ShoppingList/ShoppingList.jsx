@@ -20,6 +20,29 @@ export const ShoppingList = () => {
             alert(err);
         }
     };
+
+    const getUserProducts = useCallback(async () => {
+        const getUrl = `user/${user.uid}/products`
+        try {
+            const response = await firebase.database().ref(getUrl).once('value')
+            const data = [];
+            // map object entries to get array instead of nested objects from firebase
+            response.forEach((element => {
+                data.push({
+                    itemValue: element.val(),
+                    itemKey: element.key,
+                })
+            }));
+
+            setListOfProducts(...listOfProducts, data);
+        } catch (err) {
+            alert(err);
+        }
+    });
+
+    useEffect(() => {
+        getUserProducts();
+    }, []);
     
     const handleInputChange = (value) => {
         setProduct(value)
@@ -27,11 +50,11 @@ export const ShoppingList = () => {
 
     const handleSubmit = () => {
         const isValid = product.trim() !== '';
-        const isoDateNow = new Date().toISOString();
-        const newProduct = { id: isoDateNow, value: product };
+        // const isoDateNow = new Date().toISOString();
+        // const newProduct = { id: isoDateNow, value: product };
 
         const addProduct = () => {
-            setListOfProducts(state => [...state, newProduct]);
+            setListOfProducts(state => [...state, product]);
             setProduct('');
         };       
 
@@ -40,7 +63,7 @@ export const ShoppingList = () => {
 
     const removeProduct = (productToRemove) => {
         setListOfProducts(state => {
-          return state.filter(product => product.id !== productToRemove)
+            return state.filter(product => product.id !== productToRemove)
         });
     }
 
@@ -65,13 +88,13 @@ export const ShoppingList = () => {
             
             <FlatList 
                 style={styles.list}
-                keyExtractor={item => item.id}
                 data={listOfProducts}
-                renderItem={itemData => (
-                    <View style={styles.product} id={itemData.item.id}>
-                        <Text>{itemData.item.value}</Text>
+                keyExtractor={(item => item.itemKey)}
+                renderItem={({item}) => (
+                    <View style={styles.product} id={item.itemKey}>
+                        <Text>{item.itemValue}</Text>
                         <TouchableHighlight style={styles.removeButton}>
-                            <Button color={'#689FEF'} title={'X'} onPress={removeProduct.bind(this, itemData.item.id)}/>
+                            <Button color={'#689FEF'} title={'X'} onPress={removeProduct.bind(this, item.itemKey)}/>
                         </TouchableHighlight>
                     </View>
                 )}
