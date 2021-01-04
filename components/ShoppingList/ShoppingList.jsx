@@ -50,20 +50,19 @@ export const ShoppingList = () => {
 
     const handleSubmit = () => {
         const isValid = product.trim() !== '';
-        // const isoDateNow = new Date().toISOString();
-        // const newProduct = { id: isoDateNow, value: product };
+        const sessionKey = new Date().toISOString();
 
         const addProduct = () => {
-            setListOfProducts(state => [...state, product]);
+            setListOfProducts(state => [{itemValue: product, itemKey: sessionKey}, ...state]);
             setProduct('');
-        };       
+        };
 
         isValid && postProduct(product) && addProduct(); 
     }
 
     const removeProduct = (productToRemove) => {
         setListOfProducts(state => {
-            return state.filter(product => product.id !== productToRemove)
+            return state.filter(product => product.itemKey !== productToRemove)
         });
     }
 
