@@ -14,6 +14,7 @@ export const ShoppingList = () => {
         const postUrl = `user/${user.uid}/products`
         try {
             await firebase.database().ref(postUrl).push(productName);
+            getUserProducts();
             alert('Sent correctly');
             return true;
         } catch (err) {
@@ -33,12 +34,22 @@ export const ShoppingList = () => {
                     itemKey: element.key,
                 })
             }));
-
-            setListOfProducts(...listOfProducts, data);
+            setListOfProducts(data);
         } catch (err) {
             alert(err);
         }
     });
+
+    const removeUserProduct = async (productToRemove) => {
+        const postUrl = `user/${user.uid}/products`
+        try {
+            await firebase.database().ref(postUrl).child(productToRemove).remove();
+            getUserProducts();
+            alert('Removed correctly');
+        } catch (err) {
+            alert(err);
+        }
+    };
 
     useEffect(() => {
         getUserProducts();
@@ -50,20 +61,7 @@ export const ShoppingList = () => {
 
     const handleSubmit = () => {
         const isValid = product.trim() !== '';
-        const sessionKey = new Date().toISOString();
-
-        const addProduct = () => {
-            setListOfProducts(state => [{itemValue: product, itemKey: sessionKey}, ...state]);
-            setProduct('');
-        };
-
-        isValid && postProduct(product) && addProduct(); 
-    }
-
-    const removeProduct = (productToRemove) => {
-        setListOfProducts(state => {
-            return state.filter(product => product.itemKey !== productToRemove)
-        });
+        isValid && postProduct(product) && setProduct(''); 
     }
 
     const signOut = () => {
@@ -93,7 +91,7 @@ export const ShoppingList = () => {
                     <View style={styles.product} id={item.itemKey}>
                         <Text>{item.itemValue}</Text>
                         <TouchableHighlight style={styles.removeButton}>
-                            <Button color={'#689FEF'} title={'X'} onPress={removeProduct.bind(this, item.itemKey)}/>
+                            <Button color={'#689FEF'} title={'X'} onPress={() => removeUserProduct(item.itemKey)}/>
                         </TouchableHighlight>
                     </View>
                 )}
