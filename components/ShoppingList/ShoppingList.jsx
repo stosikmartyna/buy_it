@@ -1,56 +1,12 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
-import firebase from 'firebase';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, FlatList, TouchableHighlight } from 'react-native';
+import { useProducts } from '../../hooks/useProducts';
 import { styles } from './ShoppingList.styles';
-import { AuthContext } from '../../context/AuthProvider';
 
 export const ShoppingList = () => {
     const [product, setProduct] = useState('');
-    const [listOfProducts, setListOfProducts] = useState([]);
-
-    const {user} = useContext(AuthContext);
-
-    const postProduct = async (productName) => {
-        const postUrl = `user/${user.uid}/products`
-        try {
-            await firebase.database().ref(postUrl).push(productName);
-            getUserProducts();
-            alert('Sent correctly');
-            return true;
-        } catch (err) {
-            alert(err);
-        }
-    };
-
-    const getUserProducts = useCallback(async () => {
-        const getUrl = `user/${user.uid}/products`
-        try {
-            const response = await firebase.database().ref(getUrl).once('value')
-            const data = [];
-            // map object entries to get array instead of nested objects from firebase
-            response.forEach((element => {
-                data.push({
-                    itemValue: element.val(),
-                    itemKey: element.key,
-                })
-            }));
-            setListOfProducts(data);
-        } catch (err) {
-            alert(err);
-        }
-    });
-
-    const removeUserProduct = async (productToRemove) => {
-        const postUrl = `user/${user.uid}/products`
-        try {
-            await firebase.database().ref(postUrl).child(productToRemove).remove();
-            getUserProducts();
-            alert('Removed correctly');
-        } catch (err) {
-            alert(err);
-        }
-    };
-
+    const {getUserProducts,postProduct, removeUserProduct, signOut, listOfProducts} = useProducts();
+  
     useEffect(() => {
         getUserProducts();
     }, []);
@@ -62,10 +18,6 @@ export const ShoppingList = () => {
     const handleSubmit = () => {
         const isValid = product.trim() !== '';
         isValid && postProduct(product) && setProduct(''); 
-    }
-
-    const signOut = () => {
-        firebase.auth().signOut();
     }
 
     return (
