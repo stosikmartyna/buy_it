@@ -1,5 +1,16 @@
 import { StyleSheet } from 'react-native';
 
+const product = {
+    alignItems: 'center',
+    backgroundColor: '#d4e4fc',
+    borderRadius: 4,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+}
+
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -44,15 +55,13 @@ export const styles = StyleSheet.create({
         width: '100%',
     },
 
-    product: {
-        alignItems: 'center',
-        backgroundColor: '#d4e4fc',
-        borderRadius: 4,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginBottom: 5,
-        paddingHorizontal: 10,
-        paddingVertical: 5,
+    product: product,
+
+    productInBasket: {
+        ...product,
+        backgroundColor: 'transparent',
+        borderWidth: 1,
+        borderColor: '#e2e2e2',
     },
 
     removeButton: {

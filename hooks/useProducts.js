@@ -29,6 +29,7 @@ export const useProducts = () => {
                 data.push({
                     itemValue: element.val(),
                     itemKey: element.key,
+                    isInBasket: false,
                 })
             }));
             setListOfProducts(data);
@@ -52,11 +53,22 @@ export const useProducts = () => {
         firebase.auth().signOut();
     }
 
+    const addToBasket = (key) => {
+        const productToBasket = listOfProducts.find(product => product.itemKey === key);
+        const filteredList = listOfProducts.filter(product => product !== productToBasket);
+
+        const updatedProduct = {...productToBasket, isInBasket: !productToBasket.isInBasket};
+        const updatedList = [...filteredList, updatedProduct];
+
+        setListOfProducts(updatedList)
+    }
+
     return {
         postProduct,
         getUserProducts,
         removeUserProduct,
         signOut,
+        addToBasket,
         listOfProducts
     }
 }

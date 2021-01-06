@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, FlatList, TouchableHighlight } from 'react-native';
+import { View, Text, TextInput, Button, FlatList, TouchableHighlight, TouchableOpacity } from 'react-native';
 import { useProducts } from '../../hooks/useProducts';
 import { styles } from './ShoppingList.styles';
 
 export const ShoppingList = () => {
     const [product, setProduct] = useState('');
-    const {getUserProducts,postProduct, removeUserProduct, signOut, listOfProducts} = useProducts();
+    const {getUserProducts, postProduct, removeUserProduct, signOut, listOfProducts, addToBasket} = useProducts();
   
     useEffect(() => {
         getUserProducts();
@@ -40,12 +40,21 @@ export const ShoppingList = () => {
                 data={listOfProducts}
                 keyExtractor={(item => item.itemKey)}
                 renderItem={({item}) => (
-                    <View style={styles.product} id={item.itemKey}>
+                    <TouchableOpacity 
+                        style={item.isInBasket ? styles.productInBasket : styles.product} 
+                        id={item.itemKey} 
+                        onPress={() => addToBasket(item.itemKey)}
+                    >
                         <Text>{item.itemValue}</Text>
                         <TouchableHighlight style={styles.removeButton}>
-                            <Button color={'#689FEF'} title={'X'} onPress={() => removeUserProduct(item.itemKey)}/>
+                            <Button 
+                                color={'#689FEF'} 
+                                title={'X'} 
+                                onPress={() => removeUserProduct(item.itemKey)} 
+                                disabled={item.isInBasket} 
+                            />
                         </TouchableHighlight>
-                    </View>
+                    </TouchableOpacity>
                 )}
             />
             <TouchableHighlight style={styles.signOutButton}>
