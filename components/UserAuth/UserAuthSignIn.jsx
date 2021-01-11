@@ -1,29 +1,10 @@
-import React, { useState, useCallback } from 'react';
-import firebase from 'firebase';
+import React from 'react';
 import { Text, View, TextInput, Button } from 'react-native';
 import { styles } from './UserAuth.styles';
+import { useAuth } from '../../hooks/useAuth';
 
 export const UserAuthSignIn = ({ setIsSignInForm }) => {
-    const [loginData, setLoginData] = useState({email: '', password: ''});
-
-    const handleEmail = (value) => {
-        setLoginData({...loginData, email: value});
-    }
-
-    const handlePassword = (value) => {
-        setLoginData({...loginData, password: value});
-    }
-
-    const handleSignIn = useCallback(
-        async () => {
-        try {
-            await firebase
-                .auth()
-                .signInWithEmailAndPassword(loginData.email, loginData.password)
-        } catch (error) {
-            console.warn(error);
-        }
-    });
+    const {loginData, handleEmail, handlePassword, handleSignIn} = useAuth();
 
     return (
         <View>

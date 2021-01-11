@@ -49,10 +49,6 @@ export const useProducts = () => {
         }
     };
 
-    const signOut = () => {
-        firebase.auth().signOut();
-    }
-
     const addToBasket = (key) => {
         const productToBasket = listOfProducts.find(product => product.itemKey === key);
         const filteredList = listOfProducts.filter(product => product !== productToBasket);
@@ -67,7 +63,6 @@ export const useProducts = () => {
         postProduct,
         getUserProducts,
         removeUserProduct,
-        signOut,
         addToBasket,
         listOfProducts
     }

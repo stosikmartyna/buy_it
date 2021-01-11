@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, FlatList, TouchableHighlight, TouchableOpacity } from 'react-native';
+import { useAuth } from '../../hooks/useAuth';
 import { useProducts } from '../../hooks/useProducts';
 import { styles } from './ShoppingList.styles';
 
 export const ShoppingList = () => {
     const [product, setProduct] = useState('');
-    const {getUserProducts, postProduct, removeUserProduct, signOut, listOfProducts, addToBasket} = useProducts();
+    const {getUserProducts, postProduct, removeUserProduct, listOfProducts, addToBasket} = useProducts();
+    const {signOut} = useAuth();
   
     useEffect(() => {
         getUserProducts();
