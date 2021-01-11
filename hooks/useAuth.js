@@ -5,15 +5,14 @@ export const useAuth = () => {
     const [loginData, setLoginData] = useState({email: '', password: ''});
 
     const handleEmail = (value) => {
-        setLoginData({...loginData, email: value});
+        setLoginData({...loginData, email: value.trim()});
     }
 
     const handlePassword = (value) => {
-        setLoginData({...loginData, password: value});
+        setLoginData({...loginData, password: value.trim()});
     }
 
-    const handleSignUp = useCallback(
-        async () => {
+    const handleSignUp = useCallback(async () => {
         try {
             await firebase
                 .auth()
@@ -23,8 +22,7 @@ export const useAuth = () => {
         }
     });
 
-    const handleSignIn = useCallback(
-        async () => {
+    const handleSignIn = useCallback(async () => {
         try {
             await firebase
                 .auth()
