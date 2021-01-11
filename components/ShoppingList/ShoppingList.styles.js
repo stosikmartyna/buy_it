@@ -64,6 +64,18 @@ export const styles = StyleSheet.create({
         borderColor: '#e2e2e2',
     },
 
+    shoppingListImage: {
+        height: 26,
+        marginRight: 10,
+        width: 26
+    },
+
+    basketAndButton: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row'
+    },
+
     removeButton: {
         width: 40
     },

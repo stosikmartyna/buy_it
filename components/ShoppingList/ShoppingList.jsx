@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, FlatList, TouchableHighlight, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, Button, FlatList, TouchableHighlight, TouchableOpacity, Image } from 'react-native';
 import { useAuth } from '../../hooks/useAuth';
 import { useProducts } from '../../hooks/useProducts';
 import { styles } from './ShoppingList.styles';
@@ -48,14 +48,17 @@ export const ShoppingList = () => {
                         onPress={() => addToBasket(item.itemKey)}
                     >
                         <Text>{item.itemValue}</Text>
-                        <TouchableHighlight style={styles.removeButton}>
-                            <Button 
-                                color={'#689FEF'} 
-                                title={'X'} 
-                                onPress={() => removeUserProduct(item.itemKey)} 
-                                disabled={item.isInBasket} 
-                            />
-                        </TouchableHighlight>
+                        <View style={styles.basketAndButton}>
+                            {item.isInBasket && <Image style={styles.shoppingListImage} source={require('../.././assets/basket.png')} />}
+                            <TouchableHighlight style={styles.removeButton}>
+                                <Button 
+                                    color={'#689FEF'} 
+                                    title={'X'} 
+                                    onPress={() => removeUserProduct(item.itemKey)} 
+                                    disabled={item.isInBasket} 
+                                />
+                            </TouchableHighlight>
+                        </View>
                     </TouchableOpacity>
                 )}
             />
