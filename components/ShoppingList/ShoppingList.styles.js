@@ -5,10 +5,10 @@ const product = {
     backgroundColor: '#d4e4fc',
     borderRadius: 4,
     flexDirection: 'row',
+    height: 50,
     justifyContent: 'space-between',
     marginBottom: 5,
     paddingHorizontal: 10,
-    paddingVertical: 5,
 }
 
 export const styles = StyleSheet.create({
@@ -51,15 +51,24 @@ export const styles = StyleSheet.create({
         textTransform: 'uppercase',
     },
 
+    instructionText: {
+        color: '#969696',
+        marginBottom: 10,
+    },
+
     list: {
         width: '100%',
     },
 
     product: product,
 
+    productName: {
+        color: '#4f4f4f',
+    },
+
     productInBasket: {
         ...product,
-        backgroundColor: 'transparent',
+        backgroundColor: '#fff',
         borderWidth: 1,
         borderColor: '#e2e2e2',
     },
@@ -70,17 +79,22 @@ export const styles = StyleSheet.create({
         width: 26
     },
 
-    basketAndButton: {
-        alignItems: 'center',
-        display: 'flex',
-        flexDirection: 'row'
-    },
-
-    removeButton: {
-        width: 40
-    },
-
     signOutButton: {
         marginBottom: 30,
+    },
+
+    hiddenItem: {
+        backgroundColor: '#f77979',
+        borderRadius: 4,
+        height: 50,
+        marginBottom: 5,
+        paddingHorizontal: 10,
+        width: '100%',
+    },
+
+    hiddenItemImage: {
+        height: 26,
+        marginTop: 11,
+        width: 26,
     }
 })
