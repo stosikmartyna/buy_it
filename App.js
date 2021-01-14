@@ -2,6 +2,9 @@ import React from 'react';
 import firebase from 'firebase';
 import { AuthProvider } from './context/AuthProvider';
 import { AppView } from './components/AppView/AppView';
+import { LogBox } from 'react-native';
+
+LogBox.ignoreLogs(['Setting a timer']);
 
 if (!firebase.apps.length) {
   firebase.initializeApp({
