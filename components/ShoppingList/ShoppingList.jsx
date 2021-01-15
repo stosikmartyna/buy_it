@@ -27,18 +27,21 @@ export const ShoppingList = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.header}>Shopping List</Text>
-            <View style={styles.form}>
-                <TextInput 
-                    placeholder={'ex. Milk'}
-                    style={styles.input}
-                    onChangeText={handleInputChange}
-                    value={product}
-                />
-                <TouchableHighlight>
-                    <Text style={styles.button} onPress={handleSubmit}>Add</Text>
-                </TouchableHighlight>
+            <View style={styles.formContainer}>
+                <Text style={styles.header}>Shopping List</Text>
+                <View style={styles.form}>
+                    <TextInput 
+                        placeholder={'ex. Milk'}
+                        style={styles.input}
+                        onChangeText={handleInputChange}
+                        value={product}
+                    />
+                    <TouchableHighlight>
+                        <Text style={styles.button} onPress={handleSubmit}>Add</Text>
+                    </TouchableHighlight>
+                </View>
             </View>
+
 
             <Text style={styles.instructionText}>Swipe out to remove product from the list</Text>
 

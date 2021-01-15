@@ -4,7 +4,7 @@ export const styles = StyleSheet.create({
     snackbarContainer: {
         display: 'flex',
         height: '100%',
-        justifyContent: 'center',
+        justifyContent: 'flex-end',
         position: 'absolute',
         width: '100%',
         zIndex: 1,
@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         paddingHorizontal: 10,
-        paddingVertical: 15,
+        paddingVertical: 20,
     },
 
     snackbarImage: {

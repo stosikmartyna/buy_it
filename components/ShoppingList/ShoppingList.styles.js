@@ -13,21 +13,25 @@ const product = {
 
 export const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: 'white',
         alignItems: 'center',
+        backgroundColor: 'white',
+        flex: 1,
+        marginTop: 50,
+    },
+
+    formContainer: {
         marginHorizontal: 40,
-        marginTop: 60,
     },
 
     header: {
         color: '#689FEF',
         fontSize: 30,
         marginBottom: 10,
+        textAlign: 'center',
     },
 
     form: {
-        alignItems: 'center',
+        display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginBottom: 10,
@@ -38,6 +42,7 @@ export const styles = StyleSheet.create({
         borderColor: 'lightgrey', 
         borderRadius: 4,
         borderWidth: 1,
+        marginLeft: 8,
         padding: 10,
         width: '70%',
     },
@@ -57,7 +62,8 @@ export const styles = StyleSheet.create({
     },
 
     list: {
-        width: '100%',
+        marginBottom: 15,
+        width: '80%',
     },
 
     product: product,
@@ -80,7 +86,7 @@ export const styles = StyleSheet.create({
     },
 
     signOutButton: {
-        marginBottom: 30,
+        marginBottom: 15,
     },
 
     hiddenItem: {
@@ -89,7 +95,6 @@ export const styles = StyleSheet.create({
         height: 50,
         marginBottom: 5,
         paddingHorizontal: 10,
-        width: '100%',
     },
 
     hiddenItemImage: {

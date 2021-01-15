@@ -8,8 +8,8 @@ export const useProducts = () => {
 
     const {user} = useContext(AuthContext);
 
-    const closeNotificationPopup = () => {
-        setTimeout(setIsSnackbarVisible, 2000)
+    const closeSnackbar = () => {
+        setTimeout(setIsSnackbarVisible, 3000)
     }
 
     const postProduct = async (productName) => {
@@ -22,7 +22,7 @@ export const useProducts = () => {
         } catch (err) {
             alert(err);
         } finally {
-            closeNotificationPopup();
+            closeSnackbar();
         }
     };
 
@@ -72,6 +72,6 @@ export const useProducts = () => {
         removeUserProduct,
         addToBasket,
         listOfProducts,
-        isSnackbarVisible
+        isSnackbarVisible,
     }
 }
