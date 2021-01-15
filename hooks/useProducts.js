@@ -4,18 +4,25 @@ import firebase from 'firebase';
 
 export const useProducts = () => {
     const [listOfProducts, setListOfProducts] = useState([]);
+    const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
 
     const {user} = useContext(AuthContext);
+
+    const closeNotificationPopup = () => {
+        setTimeout(setIsSnackbarVisible, 2000)
+    }
 
     const postProduct = async (productName) => {
         const postUrl = `user/${user.uid}/products`
         try {
             await firebase.database().ref(postUrl).push(productName);
             getUserProducts();
-            alert('Sent correctly');
+            setIsSnackbarVisible(true);
             return true;
         } catch (err) {
             alert(err);
+        } finally {
+            closeNotificationPopup();
         }
     };
 
@@ -64,6 +71,7 @@ export const useProducts = () => {
         getUserProducts,
         removeUserProduct,
         addToBasket,
-        listOfProducts
+        listOfProducts,
+        isSnackbarVisible
     }
 }

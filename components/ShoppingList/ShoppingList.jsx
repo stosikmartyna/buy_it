@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, TouchableHighlight, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TextInput, Button, TouchableHighlight, TouchableOpacity, Image, Keyboard } from 'react-native';
 import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
 import { useAuth } from '../../hooks/useAuth';
 import { useProducts } from '../../hooks/useProducts';
+import { Snackbar } from '../Snackbar/Snackbar';
 import { styles } from './ShoppingList.styles';
 
 export const ShoppingList = () => {
     const [product, setProduct] = useState('');
-    const {getUserProducts, postProduct, removeUserProduct, listOfProducts, addToBasket} = useProducts();
+    const {getUserProducts, postProduct, removeUserProduct, listOfProducts, addToBasket, isSnackbarVisible} = useProducts();
     const {signOut} = useAuth();
   
     useEffect(() => {
@@ -21,6 +22,7 @@ export const ShoppingList = () => {
     const handleSubmit = () => {
         const isValid = product.trim() !== '';
         isValid && postProduct(product) && setProduct(''); 
+        Keyboard.dismiss();
     }
 
     return (
@@ -76,6 +78,7 @@ export const ShoppingList = () => {
             <TouchableHighlight style={styles.signOutButton}>
                 <Button color={'#689FEF'} title={'Sign out'} onPress={signOut} style={styles.button} />
             </TouchableHighlight>
+            {isSnackbarVisible && <Snackbar />}
         </View>
     )
 }    
