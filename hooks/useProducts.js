@@ -4,12 +4,19 @@ import firebase from 'firebase';
 
 export const useProducts = () => {
     const [listOfProducts, setListOfProducts] = useState([]);
-    const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
+    const [snackbar, setSnackbar] = useState({
+        isVisible: false,
+        type: undefined,
+        message: '',
+    });
 
     const {user} = useContext(AuthContext);
 
     const closeSnackbar = () => {
-        setTimeout(setIsSnackbarVisible, 3000)
+        setTimeout(() => setSnackbar({
+            isVisible: false,
+            type: undefined
+        }), 3000)
     }
 
     const postProduct = async (productName) => {
@@ -17,10 +24,10 @@ export const useProducts = () => {
         try {
             await firebase.database().ref(postUrl).push(productName);
             getUserProducts();
-            setIsSnackbarVisible(true);
+            setSnackbar({isVisible: true, type: 'Success', message: 'Sent correctly!'});
             return true;
-        } catch (err) {
-            alert(err);
+        } catch {
+            setSnackbar({isVisible: true, type: 'Error', message: 'Cannot add new product. Please try again.'});
         } finally {
             closeSnackbar();
         }
@@ -40,19 +47,23 @@ export const useProducts = () => {
                 })
             }));
             setListOfProducts(data);
-        } catch (err) {
-            alert(err);
+        } catch {
+            setSnackbar({isVisible: true, type: 'Error', message: 'Cannot load list of products.'});
+        } finally {
+            closeSnackbar();
         }
     });
 
     const removeUserProduct = async (productToRemove) => {
         const postUrl = `user/${user.uid}/products`
         try {
-            await firebase.database().ref(postUrl).child(productToRemove).remove();
+            await firebase.database().ref(postUrl).child(productToRemove).remove();            
             getUserProducts();
-            alert('Removed correctly');
+            setSnackbar({isVisible: true, type: 'Success', message: 'Removed correctly!'});
         } catch (err) {
-            alert(err);
+            setSnackbar({isVisible: true, type: 'Error', message: 'Cannot remove product. Please try again.'});
+        } finally {
+            closeSnackbar();
         }
     };
 
@@ -72,6 +83,6 @@ export const useProducts = () => {
         removeUserProduct,
         addToBasket,
         listOfProducts,
-        isSnackbarVisible,
+        snackbar,
     }
 }

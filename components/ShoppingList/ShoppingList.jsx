@@ -8,7 +8,7 @@ import { styles } from './ShoppingList.styles';
 
 export const ShoppingList = () => {
     const [product, setProduct] = useState('');
-    const {getUserProducts, postProduct, removeUserProduct, listOfProducts, addToBasket, isSnackbarVisible} = useProducts();
+    const {getUserProducts, postProduct, removeUserProduct, listOfProducts, addToBasket, snackbar} = useProducts();
     const {signOut} = useAuth();
   
     useEffect(() => {
@@ -24,6 +24,8 @@ export const ShoppingList = () => {
         isValid && postProduct(product) && setProduct(''); 
         Keyboard.dismiss();
     }
+
+    const basketIconPath = (isInBasket) => isInBasket ? require('../.././assets/inBasket.png') : require('../.././assets/basket.png');
 
     return (
         <View style={styles.container}>
@@ -54,7 +56,7 @@ export const ShoppingList = () => {
                     <SwipeRow 
                         leftOpenValue={50} 
                         disableLeftSwipe 
-                        disableRightSwipe={item.isInBasket === true}
+                        disableRightSwipe={item.isInBasket}
                     >
                         <View>
                             {!item.isInBasket && (
@@ -71,8 +73,7 @@ export const ShoppingList = () => {
                         >    
                             <>
                                 <Text style={styles.productName}>{item.itemValue}</Text>
-                                {!item.isInBasket && <Image style={styles.shoppingListImage} source={require('../.././assets/basket.png')} />}
-                                {item.isInBasket && <Image style={styles.shoppingListImage} source={require('../.././assets/inBasket.png')} />}
+                                <Image style={styles.shoppingListImage} source={basketIconPath(item.isInBasket)} />
                             </>
                         </TouchableHighlight>
                     </SwipeRow>
@@ -81,7 +82,7 @@ export const ShoppingList = () => {
             <TouchableHighlight style={styles.signOutButton}>
                 <Button color={'#689FEF'} title={'Sign out'} onPress={signOut} style={styles.button} />
             </TouchableHighlight>
-            {isSnackbarVisible && <Snackbar />}
+            {snackbar.isVisible && <Snackbar state={snackbar} />}
         </View>
     )
 }    

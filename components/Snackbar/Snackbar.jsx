@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { View, Image, Text, Animated, TouchableHighlight, Easing } from 'react-native';
 import { styles } from './Snackbar.styles';
 
-export const Snackbar = () => {
+export const Snackbar = ({ state }) => {
     const [snackbarAnimation] = useState(new Animated.Value(200));
+
+    const {type, message} = state;
 
     const animateSnackbar = () => {
         Animated.sequence([
@@ -33,16 +35,18 @@ export const Snackbar = () => {
 
     useEffect(() => {
         animateSnackbar();
-    })
+    }, []);
+
+    const snackbarIconPath = type === 'Success' ? require('../.././assets/success.png') : require('../.././assets/error.png');
 
     return (
         <View style={styles.snackbarContainer}>
             <TouchableHighlight>
-                <Animated.View style={[styles.snackbarBox, snackbarAnimationTransform]}>
-                    <Image style={styles.snackbarImage} source={require('../.././assets/success.png')} />
+                <Animated.View style={[styles.snackbarBox(type), snackbarAnimationTransform]}>
+                    <Image style={styles.snackbarImage} source={snackbarIconPath} />
                     <View>
-                        <Text style={styles.snackbarTitle}>Success</Text>
-                        <Text style={styles.snackbarText}>Sent correctly!</Text>
+                        <Text style={styles.snackbarTitle}>{type}</Text>
+                        <Text style={styles.snackbarText}>{message}</Text>
                     </View>
                 </Animated.View>
             </TouchableHighlight>
