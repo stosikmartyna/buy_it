@@ -3,12 +3,13 @@ import { AuthContext } from '../context/AuthProvider';
 import firebase from 'firebase';
 
 export const useProducts = () => {
-    const [listOfProducts, setListOfProducts] = useState([]);
+    const [listOfProducts, setListOfProducts] = useState(undefined);
     const [snackbar, setSnackbar] = useState({
         isVisible: false,
         type: undefined,
         message: '',
     });
+    const [isFetching, setIsFetching] = useState(false);
 
     const {user} = useContext(AuthContext);
 
@@ -35,6 +36,7 @@ export const useProducts = () => {
 
     const getUserProducts = useCallback(async () => {
         const getUrl = `user/${user.uid}/products`
+        setIsFetching(true);
         try {
             const response = await firebase.database().ref(getUrl).once('value')
             const data = [];
@@ -51,6 +53,7 @@ export const useProducts = () => {
             setSnackbar({isVisible: true, type: 'Error', message: 'Cannot load list of products.'});
         } finally {
             closeSnackbar();
+            setIsFetching(false);
         }
     });
 
@@ -84,5 +87,6 @@ export const useProducts = () => {
         addToBasket,
         listOfProducts,
         snackbar,
+        isFetching
     }
 }

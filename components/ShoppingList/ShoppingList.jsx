@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, TouchableHighlight, TouchableOpacity, Image, Keyboard } from 'react-native';
+import { View, Text, TextInput, Button, TouchableHighlight, TouchableOpacity, Image, Keyboard, ActivityIndicator } from 'react-native';
 import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
 import { useAuth } from '../../hooks/useAuth';
 import { useProducts } from '../../hooks/useProducts';
@@ -8,7 +8,7 @@ import { styles } from './ShoppingList.styles';
 
 export const ShoppingList = () => {
     const [product, setProduct] = useState('');
-    const {getUserProducts, postProduct, removeUserProduct, listOfProducts, addToBasket, snackbar} = useProducts();
+    const {getUserProducts, postProduct, removeUserProduct, listOfProducts, addToBasket, snackbar, isFetching} = useProducts();
     const {signOut} = useAuth();
   
     useEffect(() => {
@@ -43,7 +43,6 @@ export const ShoppingList = () => {
                     </TouchableHighlight>
                 </View>
             </View>
-
 
             <Text style={styles.instructionText}>Swipe out to remove product from the list</Text>
 
@@ -83,6 +82,7 @@ export const ShoppingList = () => {
                 <Button color={'#689FEF'} title={'Sign out'} onPress={signOut} style={styles.button} />
             </TouchableHighlight>
             {snackbar.isVisible && <Snackbar state={snackbar} />}
+            {isFetching && <ActivityIndicator style={styles.spinner} size={70} color={'#689FEF'} />}
         </View>
     )
 }    

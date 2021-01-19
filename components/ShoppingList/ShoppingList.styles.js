@@ -101,5 +101,11 @@ export const styles = StyleSheet.create({
         height: 26,
         marginTop: 11,
         width: 26,
+    },
+
+    spinner: {
+        position: 'absolute',
+        top: '45%',
+        zIndex: 1
     }
 })
