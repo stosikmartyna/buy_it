@@ -25,7 +25,7 @@ export const useProducts = () => {
         try {
             await firebase.database().ref(postUrl).push(productName);
             getUserProducts();
-            setSnackbar({isVisible: true, type: 'Success', message: 'Sent correctly!'});
+            setSnackbar({isVisible: true, type: 'Success', message: 'Product added!'});
             return true;
         } catch {
             setSnackbar({isVisible: true, type: 'Error', message: 'Cannot add new product. Please try again.'});
